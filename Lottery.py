@@ -3,7 +3,7 @@ class Lottery(sp.Contract):
     def __init__(self):
         #storage we have to set players 
         self.init(
-            players=sp.map(l={} , tkey=sp.TNat , tvalue=TAddress),
+            players=sp.map(l={} , tkey=sp.TNat , tvalue=sp.TAddress),
             ticket_cost= sp.tez(1),
             ticket_available=sp.nat(5),
             max_tickets=sp.nat(5)
