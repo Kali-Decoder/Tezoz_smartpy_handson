@@ -13,12 +13,14 @@ class CRUD(sp.Contract):
     #D-Delete Operation
     @sp.entry_point
     def createTerm(self,value=sp.TString):
-        self.data.messages[self.data.messages]=value
+        self.data.messages[sp.len(self.data.messages)]=value
 
-    @sp.entry_point
+    # @sp.entry_point
+    @sp.private_lambda 
     def readTerm(self,id=sp.TNat):
         sp.verify(id<=sp.len(self.data.messages),"Data is not exist")
-        self.data.messages[id] 
+        sp.result(self.data.messages[id])
+        
 
     @sp.entry_point
     def updateTerm(self,id=sp.TNat,updateTermData=sp.TString):
@@ -35,13 +37,18 @@ def test():
     scenerio= sp.test_scenario()
     crud= CRUD()
     scenerio+=crud
-
     #test functions 
     scenerio+=crud.createTerm("Hello World")
     scenerio+=crud.createTerm("Hello India")
     scenerio+=crud.createTerm("Hello Argentina")
     scenerio+=crud.createTerm("Hello Australia")
     scenerio+=crud.createTerm("Hello Africa")
+
+    scenerio+=crud.updateTerm(id=sp.nat(2),updateTermData="America")
     
+    scenerio+=crud.deleteTerm(0)
+    scenerio+=crud.updateTerm(id=sp.nat(0),updateTermData="Mumbai")
+
+    # scenerio+=crud.readTerm()
     
         
